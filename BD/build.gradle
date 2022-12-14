@@ -1,0 +1,42 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+jar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	manifest {
+		attributes "Main-Class": "com.example.BirthdayWishesGenerator"
+	}
+
+	from {
+		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.apache.poi:poi:5.2.2'
+	implementation group: 'com.github.ozlerhakan', name: 'poiji', version: '3.1.7'
+	implementation group: 'com.twilio.sdk', name: 'twilio', version: '8.31.0'
+	implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+	implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.7.5'
+	implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.12.341'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
